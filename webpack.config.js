@@ -1,55 +1,51 @@
-//const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const PugPlugin = require('pug-plugin');
 const path = require('path');
-//const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ESLintPlugin = require('eslint-webpack-plugin');
+
 
 module.exports = {
-    mode: "development",
-    entry: './src/index.pug',
-    output: {
-        path: path.join(__dirname, 'dist/'),
+  mode: "production",
+  entry: './src/index.pug',
+  output: {
+    path: path.join(__dirname, 'dist/'),
 
-        filename: 'script/main.js'
-    },
-    plugins: [
-        //new MiniCssExtractPlugin(),
-        new TerserWebpackPlugin(),
-        new CssMinimizerPlugin(),
-       // new HtmlWebpackPlugin()
-       new PugPlugin({
-        pretty: true, // formatting HTML, should be used in development mode only
-        extractCss: {
-          // output filename of CSS files
-          filename: 'style/main.css'
-        },
-      })
-    ],
-    optimization: {
-        minimize: true,
-        minimizer: [
-            new TerserWebpackPlugin(),
-            new CssMinimizerPlugin()
-        ]
-    },
-    module: {
-        rules: [
-            // use: [{
-            //     loader: MiniCssExtractPlugin.loader,
-            //     options: {
-            //         esModule: true
-            //     }
-            // }, 'css-loader'],
-            // test: /\.css$/
-            {
-                test: /\.pug$/,
-                loader: PugPlugin.loader, 
-              },
-              {
-                test: /\.css$/,
-                use: ['css-loader']
-              },
-        ]
-    }
+    filename: 'script/main.js'
+  },
+  plugins: [
+    new ESLintPlugin(),
+    new TerserWebpackPlugin(),
+    new CssMinimizerPlugin(),
+
+    new PugPlugin({
+      pretty: true, // formatting HTML, should be used in development mode only
+      extractCss: {
+
+        filename: 'style/main.css'
+      },
+    })
+  ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserWebpackPlugin(),
+      new CssMinimizerPlugin()
+    ]
+  },
+  module: {
+    rules: [{
+        test: /\.pug$/,
+        loader: PugPlugin.loader,
+      },
+      {
+        test: /\.css$/,
+        use: ['css-loader']
+      },
+      {
+        test: /\.ts$/,
+        use: 'ts-loader'
+      }
+    ]
+  }
 };

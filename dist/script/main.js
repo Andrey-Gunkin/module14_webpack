@@ -1,1 +1,1 @@
-(()=>{var __webpack_modules__={"./src/index.js":()=>{eval("//import './style.css';\r\n\r\ndocument.write('Hello, world');\n\n//# sourceURL=webpack://module14/./src/index.js?")}},__webpack_exports__={};__webpack_modules__["./src/index.js"]()})();
+document.write("Hello, world");
